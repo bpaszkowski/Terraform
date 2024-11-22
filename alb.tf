@@ -49,3 +49,11 @@ resource "aws_lb_listener" "alb_listener_backend" {
     target_group_arn = aws_lb_target_group.tg_backend.arn
   }
 }
+
+resource "aws_lb_target_group" "tg_backend" {
+  name        = "tg-backend"
+  port        = 5001
+  protocol    = "HTTP"
+  target_type = "instance"
+  vpc_id      = aws_default_vpc.default.id
+}
