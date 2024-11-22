@@ -38,3 +38,14 @@ resource "aws_lb_target_group_attachment" "tg_attch_frontend" {
   target_id        = aws_instance.panda[count.index].id
   port             = 5000
 }
+
+resource "aws_lb_listener" "alb_listener_backend" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "5001"
+  protocol          = "HTTP"
+ 
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg_backend.arn
+  }
+}
