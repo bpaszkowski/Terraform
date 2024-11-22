@@ -31,3 +31,10 @@ resource "aws_lb_target_group" "tg_frontend" {
   target_type = "instance"
   vpc_id      = aws_default_vpc.default.id
 }
+
+resource "aws_lb_target_group_attachment" "tg_attch_frontend" {
+  count            = length(aws_instance.panda)
+  target_group_arn = aws_lb_target_group.tg_frontend.arn
+  target_id        = aws_instance.panda[count.index].id
+  port             = 5000
+}
